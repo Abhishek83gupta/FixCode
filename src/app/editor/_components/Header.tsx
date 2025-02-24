@@ -17,7 +17,7 @@ function Header() {
 
   return (
     <div className="relative z-50">
-      <div className="flex items-center justify-between bg-[#0a0a0f]/80 backdrop-blur-xl p-4 sm:p-6 mb-4 rounded-lg">
+      <div className="flex items-center justify-between bg-[#0a0a0f]/80 backdrop-blur-xl p-4 sm:p-6 sm:mb-4 rounded-lg">
         <div className="flex items-center gap-4 sm:gap-8 w-full sm:w-auto">
           {/* Logo */}
           <Link

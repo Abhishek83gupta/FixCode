@@ -19,7 +19,15 @@ function OutputPanel() {
   // Reset showAIComponent when output or error changes
   useEffect(() => {
     setShowAIComponent(false);
+    scrollToOutput();
   }, [output, error]);
+
+   const scrollToOutput = () => {
+    const outputSection = document.getElementById('output');
+    if (outputSection) {
+      outputSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const handleCopy = async () => {
     if (!hasContent) return;
@@ -37,7 +45,7 @@ function OutputPanel() {
   }
 
   return (
-    <div className="relative bg-[#181825] rounded-xl p-4 ring-1 ring-gray-800/50">
+    <div id="output" className="relative bg-[#181825] rounded-xl p-4 ring-1 ring-gray-800/50">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">

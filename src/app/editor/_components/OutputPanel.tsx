@@ -19,13 +19,15 @@ function OutputPanel() {
   // Reset showAIComponent when output or error changes
   useEffect(() => {
     setShowAIComponent(false);
-    scrollToOutput();
+    scrollToOutput(output,error);
   }, [output, error]);
 
-   const scrollToOutput = () => {
-    const outputSection = document.getElementById('output');
-    if (outputSection) {
-      outputSection.scrollIntoView({ behavior: 'smooth' });
+     const scrollToOutput = (output: CodeEditorState, error: any) => {
+    if (output || error) {
+      const outputSection = document.getElementById("output");
+      if (outputSection) {
+        outputSection.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 

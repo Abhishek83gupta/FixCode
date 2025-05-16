@@ -47,7 +47,7 @@ function OutputPanel() {
   }
 
   return (
-    <div id="output" className="relative bg-[#181825] rounded-xl p-4 ring-1 ring-gray-800/50">
+    <div id="output" className="relative bg-[#181825] rounded-xl sm:p-4 p-2 ring-1 ring-gray-800/50">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">

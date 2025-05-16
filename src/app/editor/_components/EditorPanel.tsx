@@ -65,26 +65,52 @@ function EditorPanel() {
     localStorage.setItem("editor-font-size", size.toString());
   };
 
-  const handleCopyCode = async () => {
-    if (editor) {
-      const code = editor.getValue();
-      await navigator.clipboard.writeText(code);
+const handleCopyCode = async () => {
+  try {
+    if (!editor) {
+      console.error("Editor is not initialized");
+      return;
     }
-    setIsCopied(true)
+    const code = editor.getValue();
+    
+    if (!code) {
+      console.error("No code to copy");
+      return;
+    }
+    
+    // Try using clipboard API
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch (clipboardError) {
+      // Fallback for browsers without clipboard API permission
+      const textarea = document.createElement('textarea');
+      textarea.value = code;
+      textarea.style.position = 'fixed';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+    
+    setIsCopied(true);
     setTimeout(() => {
-      setIsCopied(false)
+      setIsCopied(false);
     }, 2000);
-  };
+  } catch (error) {
+    console.error("Failed to copy code:", error);
+  }
+};
 
   if (!mounted) return null;
 
   return (
     <div className="relative">
-      <div className="relative bg-[#12121a]/90 backdrop-blur rounded-xl border border-white/[0.05] p-6">
+      <div className="relative bg-[#12121a]/90 backdrop-blur rounded-xl border border-white/[0.05] sm:p-6 p-3">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between mb-4 gap-4 sm:gap-6">
           {/* Left Section - Logo and Text */}
-          <div className="flex items-center gap-3 flex-1">
+          <div className="flex items-center gap-3 flex-1 justify-center">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#1e1e2e] ring-1 ring-white/5">
               <Image
                 src={"/" + language + ".png"}
@@ -123,7 +149,7 @@ function EditorPanel() {
           </div>
 
           {/* Right Section - Controls */}
-          <div className="flex items-center gap-4 justify-end w-full sm:w-auto">
+          <div className="flex items-center gap-4 justify-center w-full sm:w-auto">
             {/* Font Size Slider */}
             <div className="flex items-center gap-3 px-2 py-1 sm:px-3 sm:py-2 bg-[#1e1e2e] rounded-lg ring-1 ring-white/5">
               <TypeIcon className="size-4 text-gray-400" />
@@ -193,7 +219,7 @@ function EditorPanel() {
               fontLigatures: true,
               cursorBlinking: "smooth",
               smoothScrolling: true,
-              contextmenu: true,
+              contextmenu: false,
               renderLineHighlight: "all",
               lineHeight: 1.6,
               letterSpacing: 0.5,
@@ -203,6 +229,8 @@ function EditorPanel() {
                 horizontalScrollbarSize: 8,
               },
               lineNumbersMinChars: 1,
+              lineDecorationsWidth: 10,   
+              folding: false,
             }}
           />
           {status === "loading" && <EditorPanelSkeleton />}

@@ -109,33 +109,15 @@ function Header() {
             )}
 
             {/* Menu Toggle with Animated Icon */}
-            <button
+           <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-400 hover:text-white p-2 rounded-lg sm:hidden relative z-50"
             >
-              <AnimatePresence mode="wait">
-                {isMenuOpen ? (
-                  <motion.div
-                    key="cross"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 180, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <X className="w-6 h-6 text-white-400 hover:text-red-500 transition-all duration-300" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -180, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Menu className="w-6 h-6 text-gray-400 hover:text-white transition-all duration-300" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {isMenuOpen ? (
+                <X className="w-6 h-6 text-red-500" />
+              ) : (
+                <Menu className="w-6 h-6 text-blue-500" />
+              )}
             </button>
 
             {/* Mobile Dropdown Menu */}

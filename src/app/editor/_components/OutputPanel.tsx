@@ -1,16 +1,26 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import { AlertTriangle, CheckCircle, Clock, Copy, Terminal } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  Copy,
+  Terminal,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import RunningCodeSkeleton from "./RunningCodeSkeleton";
 import { CodeEditorState } from "@/types";
 import AskAIComponent from "./AskAIComponent";
 
 function OutputPanel() {
-  const output = useSelector((state: CodeEditorState) => state.codeEditor.output);
+  const output = useSelector(
+    (state: CodeEditorState) => state.codeEditor.output
+  );
   const error = useSelector((state: CodeEditorState) => state.codeEditor.error);
-  const isRunning = useSelector((state: CodeEditorState) => state.codeEditor.isRunning);
+  const isRunning = useSelector(
+    (state: CodeEditorState) => state.codeEditor.isRunning
+  );
 
   const [isCopied, setIsCopied] = useState(false);
   const [showAIComponent, setShowAIComponent] = useState(false);
@@ -19,14 +29,14 @@ function OutputPanel() {
   // Reset showAIComponent when output or error changes
   useEffect(() => {
     setShowAIComponent(false);
-    scrollToOutput(output,error);
+    scrollToOutput(output, error);
   }, [output, error]);
 
-     const scrollToOutput = (output: CodeEditorState, error: any) => {
+  const scrollToOutput = (output: CodeEditorState, error: any) => {
     if (output || error) {
-      const outputSection = document.getElementById("output");
-      if (outputSection) {
-        outputSection.scrollIntoView({ behavior: "smooth" });
+      // Only scroll on mobile devices
+      if ((output || error) && window.innerWidth < 768) {
+        document.getElementById("output")?.scrollIntoView({ behavior: "smooth" });
       }
     }
   };
@@ -47,7 +57,10 @@ function OutputPanel() {
   }
 
   return (
-    <div id="output" className="relative bg-[#181825] rounded-xl sm:p-4 p-2 ring-1 ring-gray-800/50">
+    <div
+      id="output"
+      className="relative bg-[#181825] rounded-xl sm:p-4 p-2 ring-1 ring-gray-800/50"
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
@@ -80,7 +93,8 @@ function OutputPanel() {
 
       {/* Output Area */}
       <div className="relative">
-        <div className="relative bg-[#1e1e2e]/50 backdrop-blur-sm border border-[#313244] 
+        <div
+          className="relative bg-[#1e1e2e]/50 backdrop-blur-sm border border-[#313244] 
         rounded-xl p-4 h-[600px] overflow-auto font-mono text-sm"
         >
           {isRunning ? (
@@ -90,7 +104,9 @@ function OutputPanel() {
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-1" />
               <div className="space-y-1">
                 <div className="font-medium">Execution Error</div>
-                <pre className="whitespace-pre-wrap text-red-400/80">{error}</pre>
+                <pre className="whitespace-pre-wrap text-red-400/80">
+                  {error}
+                </pre>
                 <button
                   onClick={handleAskAI}
                   className="mt-3 px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors"
@@ -112,7 +128,9 @@ function OutputPanel() {
               <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gray-800/50 ring-1 ring-gray-700/50 mb-4">
                 <Clock className="w-6 h-6" />
               </div>
-              <p className="text-center">Run your code to see the output here...</p>
+              <p className="text-center">
+                Run your code to see the output here...
+              </p>
             </div>
           )}
         </div>

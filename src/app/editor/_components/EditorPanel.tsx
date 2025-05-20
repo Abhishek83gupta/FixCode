@@ -110,7 +110,7 @@ const handleCopyCode = async () => {
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between mb-4 gap-4 sm:gap-6">
           {/* Left Section - Logo and Text */}
-          <div className="flex items-center gap-3 flex-1 justify-center">
+          <div className="flex items-center justify-center md:justify-start gap-3 flex-1">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#1e1e2e] ring-1 ring-white/5">
               <Image
                 src={"/" + language + ".png"}

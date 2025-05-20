@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Copy } from "lucide-react";
 import OutputPanel from "./OutputPanel";
+import axios from "axios";
 
 const AskAIComponent = ({ errorMessage }: { errorMessage: string }) => {
   const [response, setResponse] = useState("");
@@ -23,24 +24,25 @@ const AskAIComponent = ({ errorMessage }: { errorMessage: string }) => {
       .replace(/\*(.*?)\*/g, '$1');  // Remove italic markers
   };
 
-  const handleAskAI = async () => {
-    setLoading(true);
-    setResponse("");
-    try {
-      const apiResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/${encodeURIComponent(
-          `Your an AI expert to solve this error and give solution from starting of the code to the ending of the code. Error:${errorMessage}\n\nAI Response:`
-        )}`
-      );
-      const text = await apiResponse.text();
-      // Clean the response before setting it
-      setResponse(cleanMarkdown(text));
-    } catch (error) {
-      setResponse("Sorry, there was an error getting the AI's response.");
-    } finally {
-      setLoading(false);
-    }
-  };
+const handleAskAI = async () => {
+  setLoading(true);
+  setResponse("");
+  try {
+    // Call the Next.js API route using axios
+    const apiResponse = await axios.post('/api/ask-ai', {
+      errorMessage
+    });
+    const { data }= apiResponse.data;
+    
+    // Clean the response before setting it
+    setResponse(cleanMarkdown(data));
+  } catch (error) {
+    console.error('Error asking AI:', error);
+    setResponse("Sorry, there was an error getting the AI's response.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     if (errorMessage && hasError) {

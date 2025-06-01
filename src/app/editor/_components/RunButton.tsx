@@ -7,6 +7,7 @@ import { CodeEditorState } from "@/types";
 import { runCode, setExecutionResult, setIsRunning, setOutput } from "@/store/slices/codeEditorSlice";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { toast } from 'sonner'
 
 function RunButton() {
   const isRunning = useSelector((state: CodeEditorState) => state.codeEditor.isRunning);
@@ -15,12 +16,18 @@ function RunButton() {
   const { data: session } = useSession();
 
   const handleRun = async () => {
+     if (!session?.user) {
+      toast.error("Unauthorized! Please login to run code.");
+      return;
+    }
+
     const executionResult = await dispatch(runCode() as any);  // runCode returns execution result
     handleExecutionResult(executionResult);
   };
 
   const handleExecutionResult = async (executionResult : any) => {
     if (!executionResult) return;
+
 
     if (session?.user) {
       try {

@@ -10,6 +10,7 @@ import HeaderProfileBtn from "./HeaderProfileBtn";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast, Toaster } from "sonner";
 
 function Header() {
   const { data: session } = useSession();
@@ -46,7 +47,7 @@ function Header() {
             </div>
           </Link>
 
-          {/* Snippets Link (Desktop View) */}
+          {/* Snippets Login (Desktop View) */}
           <div className="hidden sm:block">
             <Link
               href="/snippets"
@@ -71,12 +72,7 @@ function Header() {
             <LanguageSelector />
           </div>
 
-          {/* Desktop View: Show RunButton if logged in */}
-          {session?.user && (
-            <div className="hidden sm:block">
-              <RunButton />
-            </div>
-          )}
+          <RunButton />
 
           {/* Profile Button (Desktop) */}
           <div className="hidden sm:block">
@@ -88,7 +84,6 @@ function Header() {
             <div className="sm:hidden flex items-center gap-2 mt-2 w-full">
               {/* Adjust alignment for smaller screens */}
               <div className="w-full flex justify-between gap-2">
-                <RunButton />
                 <HeaderProfileBtn />
               </div>
             </div>
@@ -109,7 +104,7 @@ function Header() {
             )}
 
             {/* Menu Toggle with Animated Icon */}
-           <button
+            <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-400 hover:text-white p-2 rounded-lg sm:hidden relative z-50"
             >

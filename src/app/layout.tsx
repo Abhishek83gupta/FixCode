@@ -4,7 +4,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import AuthProvider from "./AuthProvider";
 import Providers from "./Provider";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'sonner'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +37,7 @@ export default function RootLayout({
               <div className="flex-1 relative">
                 {children}
               </div>
-              <Toaster />
+              <Toaster richColors/>
               <Footer />
             </div>
           </AuthProvider>

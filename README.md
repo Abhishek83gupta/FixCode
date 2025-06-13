@@ -1,6 +1,8 @@
-# FixCode
+# FixCode AI
 
-An interactive code editor with AI-powered error resolution to help developers write, debug, and improve their code.
+FixCode is a web-based code editor that helps developers write better code by providing AI-powered error resolution. When you encounter an error, our AI assistant analyzes it and offers clear explanations and solutions, making debugging faster and more educational.
+
+Perfect for both beginners and experienced developers, FixCode supports multiple programming languages with real-time execution, helping you code more efficiently and learn from your mistakes.
 ![FixCode Screenshot](https://github.com/user-attachments/assets/55d4138d-7a09-4591-8441-a40cf895eefd)
 
 ## 🚀 Features
@@ -100,4 +102,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-Made with ❤️ by Abhishek Gupta
+<p align="center">Made with ❤️ by Abhishek Gupta</p>
